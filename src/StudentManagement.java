@@ -21,6 +21,12 @@ public class StudentManagement {
             System.out.println("4. Exit");
             System.out.print("Choose an option: ");
 
+            if (!scanner.hasNextInt()) {
+                System.out.println("Please enter a valid number.");
+                scanner.next(); // consume invalid input
+                continue;
+            }
+
             int choice = scanner.nextInt();
             scanner.nextLine(); // clearing the input buffer
 
