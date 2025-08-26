@@ -1,4 +1,4 @@
-
+import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -12,6 +12,7 @@ public class StudentManagement {
     }
 
     public void run() {
+        loadFromFile();
         while(true) {
             System.out.println("\n-- Student Management ---");
             System.out.println("1. Add Student");
@@ -34,6 +35,7 @@ public class StudentManagement {
                     findStudentById();
                     break;
                 case 4:
+                    saveToFile();
                     System.out.println("Goodbye!");
                     return;
                 default:
@@ -79,6 +81,29 @@ public class StudentManagement {
 
         System.out.println("Student with ID: " + id + " not found");
     }
+    private void saveToFile() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("students.dat"))) {
+            out.writeObject(students);
+            System.out.println("Student data saved to file");
+        } catch(IOException e) {
+            System.out.println("Error saving " + e.getMessage());
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadFromFile() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("students.dat"))) {
+            students = (ArrayList<Student>) in.readObject();
+            System.out.println("Student data loaded from file");
+        } catch (FileNotFoundException e) {
+            System.out.println("No previous data found");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading " + e.getMessage());
+        }
+    }
+
+
+
 
 
 
