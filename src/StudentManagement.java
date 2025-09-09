@@ -18,7 +18,8 @@ public class StudentManagement {
             System.out.println("1. Add Student");
             System.out.println("2. View All Students");
             System.out.println("3. Search Student by ID");
-            System.out.println("4. Exit");
+            System.out.println("4. Add grade to Student");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
 
             if (!scanner.hasNextInt()) {
@@ -41,6 +42,9 @@ public class StudentManagement {
                     searchStudentById();
                     break;
                 case 4:
+                    addGradeToStudent();
+                    break;
+                case 5:
                     saveToFile();
                     System.out.println("Goodbye!");
                     return;
@@ -106,6 +110,25 @@ public class StudentManagement {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading " + e.getMessage());
         }
+    }
+
+    private void addGradeToStudent() {
+        System.out.print("Enter student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        for (Student s : students) {
+            if (s.getId() == id) {
+                System.out.print("Enter subject: ");
+                String subject = scanner.nextLine();
+                System.out.print("Enter grade (0-100): ");
+                int grade = scanner.nextInt();
+                scanner.nextLine();
+                s.addGrade(subject, grade);
+                return;
+            }
+        }
+        System.out.println("Student not found.");
     }
 
 
